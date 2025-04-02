@@ -11,10 +11,8 @@ document.addEventListener('DOMContentLoaded', function(){
     greetings.style.color = "#00FFFF";
 
     closeRulesBtn.addEventListener('click', function(){
-        gameRules.style.display = 'none';
-
-        let gameScreen = document.querySelector('.gameScreen');
-        gameScreen.style.display = 'flex';
+        gameRules.style.visibility = 'hidden';
+        chooseRounds.style.visibility = ' visible';
     })
 
 
@@ -25,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Initially hide the selection screen
     chooseRounds.style.opacity = '0';
-    chooseRounds.style.display = 'flex';
 
     // Show after 2 seconds with a smooth fade-in
     setTimeout(function () {
