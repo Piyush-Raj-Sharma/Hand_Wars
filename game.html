@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Styles/game.css">
-    <title>Hand Wars</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="Styles/game.css" />
+  <title>Hand Wars</title>
 </head>
 <body>
+  <div class="overlay">
     <div class="enterName">
-        <label id="userNameLable" for="userName">Enter Name:</label>
-        <input type="text" id="userName">
-        <button id="nextButton">Next</button> 
+      <h2>Welcome to Hand Wars</h2>
+      <p class="tagline">Enter your name to begin the battle!</p>
+      <input type="text" id="userName" placeholder="Your Name" />
+      <button id="nextButton">Enter Arena</button>
     </div>
-    <script src="Script/game.js"></script>
+  </div>
+
+  <script src="Script/game.js"></script>
 </body>
 </html>

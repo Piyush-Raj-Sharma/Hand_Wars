@@ -1,78 +1,105 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// Variables
+$result-border-color: cyan;
+$result-bg-blur: rgba(0, 0, 0, 0.65);
+$result-popup-bg: rgba(255, 255, 255, 0.1);
+$btn-bg: cyan;
+$btn-hover-bg: #00ffff;
+$font: 'Orbitron', sans-serif;
+
+// Dark background
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a0a0a;
+  font-family: $font;
+  height: 100vh;
+  overflow: hidden;
 }
 
-html, body{
-    width: 100%;
-    height: 100%;
+// Overlay to center popup
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.05), rgba(0, 0, 0, 1));
 }
 
-body{
-    background-color: black;
-    color: white;
-}
-
-$primary-color: red;
-$secondary-color: white;
-$bg-color: black;
-$hover-color: darkred;
-
+// Glassy popup
 .enterName {
-    display: none;
-    width: 30%;
-    padding: 40px;
-    border: 2px solid $primary-color;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: $bg-color;
-    text-align: center;
+  width: 400px;
+  padding: 3em;
+  background: $result-popup-bg;
+  backdrop-filter: blur(12px);
+  border: 2px solid $result-border-color;
+  border-radius: 20px;
+  box-shadow: 0 0 30px $result-border-color;
+  color: #fff;
+  text-align: center;
+  animation: popIn 0.4s ease-in-out;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5em;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    margin-bottom: 2em;
+    color: lighten($result-border-color, 20%);
+  }
+
+  input[type="text"] {
+    width: 80%;
+    padding: 0.8em 1em;
+    font-size: 1.1rem;
+    background: transparent;
+    color: #fff;
+    border: 2px solid $result-border-color;
     border-radius: 10px;
-    box-shadow: 0px 0px 70px rgba(255, 0, 0, 0.8);
+    outline: none;
+    text-align: center;
+    margin-bottom: 1.5em;
+    transition: 0.3s;
 
-    &:hover {   // ✅ Corrected hover syntax
-        transform: translate(-50%, -50%) scale(1.1);
-        transition: all ease 0.3s;
+    &::placeholder {
+      color: lighten($result-border-color, 25%);
     }
 
-    #userNameLable {
-        font-size: 2rem;
-        color: $secondary-color;
-        display: block;
-        margin-bottom: 10px;
+    &:focus {
+      border-color: $btn-hover-bg;
+      box-shadow: 0 0 10px $btn-hover-bg;
+    }
+  }
+
+  button {
+    font-size: 1.2rem;
+    padding: 0.7em 2em;
+    background-color: $btn-bg;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+
+    &:hover {
+      background-color: $btn-hover-bg;
     }
 
-    #userName {
-        font-size: 1.5rem;
-        width: 80%;
-        padding: 10px;
-        border: 2px solid $secondary-color;
-        background-color: $bg-color;
-        color: $secondary-color;
-        border-radius: 5px;
-        outline: none;
-        text-align: center;
+    &:active {
+      transform: scale(0.96);
     }
+  }
+}
 
-    #nextButton {
-        font-size: 1.5rem;
-        padding: 5px 15px;
-        margin-top: 20px;
-        border: 2px solid $secondary-color;
-        background-color: $primary-color;
-        color: $secondary-color;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-            background-color: $hover-color;
-        }
-        &:active{
-            scale: 0.9;
-        }
-    }
+// Pop-in animation
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

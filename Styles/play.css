@@ -1,25 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   height: 100%;
 }
 
 body {
-  background-color: rgb(107, 107, 106);
-  color: white;
+  background-color: #000;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
 }
 
-.gameRules {
+.gameRules, .gameScreen .gameSpace .gameArea .gameRules {
+  visibility: visible;
   font-family: monospace;
   width: 50%;
   background: rgba(0, 0, 0, 0.8);
-  color: white;
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,13 +32,15 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
+  border-radius: 20px;
+  border: 2px solid cyan;
+  box-shadow: 0 0 20px cyan;
 }
-.gameRules .rulesHeading {
+.gameRules .rulesHeading, .gameScreen .gameSpace .gameArea .gameRules .rulesHeading {
   font-size: 2em;
-  color: red;
+  color: cyan;
 }
-.gameRules .rules-content {
+.gameRules .rules-content, .gameScreen .gameSpace .gameArea .gameRules .rules-content {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -44,34 +48,33 @@ body {
   align-items: center;
   gap: 1.5em;
 }
-.gameRules .rules-content ul {
+.gameRules .rules-content ul, .gameScreen .gameSpace .gameArea .gameRules .rules-content ul {
   list-style: none;
-  padding: 0;
 }
-.gameRules .rules-content ul li {
+.gameRules .rules-content ul li, .gameScreen .gameSpace .gameArea .gameRules .rules-content ul li {
   margin-bottom: 10px;
   font-size: 18px;
   text-align: left;
 }
-.gameRules .rules-content button {
+.gameRules .rules-content button, .gameScreen .gameSpace .gameArea .gameRules .rules-content button {
   padding: 10px 20px;
-  background: red;
-  color: white;
+  background: cyan;
+  color: #000;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   transition: 0.3s;
   font-size: 16px;
 }
-.gameRules .rules-content button:hover {
-  background: darkred;
+.gameRules .rules-content button:hover, .gameScreen .gameSpace .gameArea .gameRules .rules-content button:hover {
+  background: #00ffff;
 }
-.gameRules .rules-content button:active {
+.gameRules .rules-content button:active, .gameScreen .gameSpace .gameArea .gameRules .rules-content button:active {
   scale: 0.9;
 }
 
 .gameScreen {
-  background-color: black;
+  background-color: #000;
   padding: 1.5rem;
   display: flex;
   width: 100%;
@@ -87,66 +90,15 @@ body {
 .gameScreen .gameSpace #gameName {
   font-size: 4em;
   font-weight: 700;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: system-ui, sans-serif;
   text-transform: uppercase;
 }
 .gameScreen .gameSpace .gameArea {
   width: 100%;
 }
 .gameScreen .gameSpace .gameArea .gameRules {
-  font-family: monospace;
-  width: 50%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  gap: 2em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
+  visibility: visible;
   border: 2px solid white;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rulesHeading {
-  font-size: 2em;
-  color: red;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rules-content {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5em;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rules-content ul {
-  list-style: none;
-  padding: 0;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rules-content ul li {
-  margin-bottom: 10px;
-  font-size: 18px;
-  text-align: left;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rules-content button {
-  padding: 10px 20px;
-  background: red;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
-  font-size: 16px;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rules-content button:hover {
-  background: darkred;
-}
-.gameScreen .gameSpace .gameArea .gameRules .rules-content button:active {
-  scale: 0.9;
 }
 .gameScreen .gameSpace .gameArea .chooseRounds {
   border: 2px solid white;
@@ -168,7 +120,7 @@ body {
 .gameScreen .gameSpace .gameArea .chooseRounds h2 {
   font-size: 2.5em;
   text-transform: uppercase;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: system-ui, sans-serif;
 }
 .gameScreen .gameSpace .gameArea .chooseRounds .roundsOptions {
   display: flex;
@@ -200,53 +152,280 @@ body {
   font-weight: 600;
   border-radius: 5px;
   border: none;
+  background-color: cyan;
+  color: #000;
 }
 .gameScreen .gameSpace .gameArea .chooseRounds .startRound:active {
   scale: 0.9;
   transition: all ease 0.3s;
 }
-.gameScreen .gameMenu {
-  width: 20%;
-  background-color: rgb(218, 230, 247);
+.gameScreen .gameSpace .gameArea .playGameScreen {
+  visibility: hidden;
+  margin-top: 2em;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1.1rem;
-  gap: 2em;
 }
-.gameScreen .gameMenu .top-container {
+.gameScreen .gameSpace .gameArea .playGameScreen .currentRoundDisplay {
   width: 100%;
-  background-color: rgb(20, 34, 228);
-  border-radius: 7px;
-  padding: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .currentRoundDisplay h2 {
+  background-color: rgb(1, 132, 208);
+  padding: 0.5em 1.5em;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #fff;
+  border-radius: 10px;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 5em;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay h2,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay h2 {
+  text-transform: uppercase;
+  font-size: 2.2em;
+  font-family: system-ui, sans-serif;
+  color: #fff;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 2em;
 }
-.gameScreen .gameMenu .top-container .rulesBtn {
-  padding: 10px 30px;
-  background: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: 0.3s;
-  font-size: 1.3em;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-.gameScreen .gameMenu .top-container .rulesBtn:active {
-  scale: 0.9;
-}
-.gameScreen .gameMenu .bottom-container {
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
   width: 100%;
   height: 100%;
-  background-color: rgb(0, 47, 255);
-  border-radius: 7px;
-  padding: 1.3rem 1.1rem;
 }
-.gameScreen .gameMenu .bottom-container h1 {
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .computerMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .userMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .computerMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .userMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .computerMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .userMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .computerMove,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .userMove {
+  cursor: pointer;
+  padding: 3em;
+  background-color: rgb(11, 17, 54);
+  border: 3px solid #fff;
+  transition: all 0.3s ease-in-out;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .computerMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .userMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .computerMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .userMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .computerMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .userMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .computerMove h3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .userMove h3 {
+  scale: 3.5;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .computerMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .userMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .computerMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .userMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .computerMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .userMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .computerMove:active,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .userMove:active {
+  scale: 0.9;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .selected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .randomSelected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .selected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .randomSelected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .selected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .randomSelected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .selected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .randomSelected {
+  border: 3px solid cyan;
+  background-color: #004466;
+  box-shadow: 0 0 10px cyan;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .timer-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .timer-start .startGame {
+  font-size: 1.7em;
+  font-weight: 700;
   text-transform: uppercase;
+  padding: 0.5em 1em;
+  color: #fff;
+  background-color: rgb(53, 17, 212);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .timer-start .startGame:active {
+  scale: 0.9;
+}
+.gameScreen .gameSpace .gameArea .resultPopup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: opacity 0.3s ease-in-out;
+}
+.gameScreen .gameSpace .gameArea .resultPopup.hidden {
+  display: none;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid cyan;
+  border-radius: 20px;
+  padding: 3em;
   text-align: center;
+  color: #fff;
+  box-shadow: 0 0 20px cyan;
+  width: 300px;
+  animation: popIn 0.3s ease-in-out;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent h1 {
+  font-size: 3em;
+  margin: 0.2em 0;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent h1.winnerName {
+  font-size: 2em;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent button#nextRound {
+  margin-top: 1.5em;
+  padding: 0.7em 2em;
+  font-size: 1em;
+  background-color: cyan;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent button#nextRound:hover {
+  background-color: #00ffff;
+}
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.gameMenu {
+  width: 20%;
+  background-color: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border: 2px solid cyan;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: "Orbitron", sans-serif;
+}
+.gameMenu .top-container {
+  width: 100%;
+  background-color: #000;
+  border-radius: 12px;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+.gameMenu .top-container button {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  color: cyan;
+  border: 2px solid cyan;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  font-family: "Orbitron", sans-serif;
+}
+.gameMenu .top-container button:hover {
+  background: #00ffff;
+  color: #000;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  border-color: #00ffff;
+}
+.gameMenu .top-container button:hover h1 {
+  color: #000;
+}
+.gameMenu .top-container button:active {
+  transform: scale(0.95);
+}
+.gameMenu .top-container .dev-info h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: cyan;
+}
+.gameMenu .bottom-container {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  border: 2px solid cyan;
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+}
+.gameMenu .bottom-container h1 {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+}
+.gameMenu .bottom-container hr {
+  margin-top: 1rem;
+  border-color: cyan;
+  opacity: 0.4;
 }/*# sourceMappingURL=play.css.map */

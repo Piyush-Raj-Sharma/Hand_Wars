@@ -36,20 +36,67 @@
                     </div>
                     <button class="startRound">START</button>
                 </section>
+                <section class="playGameScreen">
+                    <div class="currentRoundDisplay">
+                        <h2></h2>
+                    </div>
+                    <div class="playGame">
+                        <div class="computerPlay">
+                            <h2>Computer</h2>
+                            <div class="optionScroll">
+                                    <div class="computerMove">
+                                        <h3>👊</h3>
+                                    </div>
+                                    <div class="computerMove">
+                                        <h3>🤚</h3>
+                                    </div>
+                                    <div class="computerMove">
+                                        <h3>✌️</h3>
+                                    </div>
+                                </div>
+                                <!-- <div class="element">👊</div> -->
+                        </div>
+                        <div class="timer-start">
+                            <button class="startGame">Play</button>
+                        </div>
+                        <div class="userPlay">
+                            <div class="selectMove">
+                                <div class="userMove">
+                                    <h3>👊</h3>
+                                </div>
+                                <div class="userMove">
+                                    <h3>🤚</h3>
+                                </div>
+                                <div class="userMove">
+                                    <h3>✌️</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="resultPopup hidden">
+                    <div class="resultContent">
+                      <h2>The Winner is:</h2>
+                      <h1 class="winnerEmoji">🎉</h1>
+                      <h1 class="winnerName">PlayerName</h1>
+                      <button id="nextRound">Next Round</button>
+                    </div>
+                  </div>
+                  
             </div>
         </div>   
         <div class="gameMenu">
             <div class="top-container">
-                <button class="rulesBtn">Rules</button>
-                <div class="dev-info">
-                    <h1>Piyush Raj</h1>
-                </div>
+              <button class="rulesBtn">Rules</button>
+              <button class="dev-info">
+                <h1>Piyush Raj</h1>
+              </button>
             </div>
             <div class="bottom-container">
-                <h1>Session History</h1>
-                <hr>
+              <h1>Session History</h1>
+              <hr />
             </div>
-        </div>
+          </div>          
     </main>
     <script src="Script/play.js"></script>
 </body>

@@ -1,31 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+
+// Theme Variables
+$result-border-color: cyan;
+$result-bg-blur: rgba(0, 0, 0, 0.65);
+$result-popup-bg: rgba(255, 255, 255, 0.1);
+$btn-bg: cyan;
+$btn-hover-bg: #00ffff;
+$font: 'Orbitron', sans-serif;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   height: 100%;
 }
 
 body {
-  background-color: rgb(107, 107, 106);
-  color: white;
+  background-color: #000; // dark theme
+  color: #fff;
+  font-family: $font;
 }
 
-$primary-color: red;
-$secondary-color: white;
-$bg-color: black;
-$hover-color: darkred;
-
 .gameRules {
+  visibility: visible; // make it visible
   font-family: monospace;
   width: 50%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  // border: 2px solid white;
+  background: rgba(0, 0, 0, 0.8); // semi-transparent black
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,13 +41,13 @@ $hover-color: darkred;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
-  // box-shadow: 0 0 100px rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  border: 2px solid $result-border-color;
+  box-shadow: 0 0 20px $result-border-color;
 
   .rulesHeading {
     font-size: 2em;
-    color: red;
-    // text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.8);
+    color: $btn-bg;
   }
 
   .rules-content {
@@ -55,7 +60,6 @@ $hover-color: darkred;
 
     ul {
       list-style: none;
-      padding: 0;
 
       li {
         margin-bottom: 10px;
@@ -66,8 +70,8 @@ $hover-color: darkred;
 
     button {
       padding: 10px 20px;
-      background: red;
-      color: white;
+      background: $btn-bg;
+      color: #000;
       border: none;
       cursor: pointer;
       border-radius: 5px;
@@ -75,7 +79,7 @@ $hover-color: darkred;
       font-size: 16px;
 
       &:hover {
-        background: darkred;
+        background: $btn-hover-bg;
       }
       &:active {
         scale: 0.9;
@@ -85,7 +89,7 @@ $hover-color: darkred;
 }
 
 .gameScreen {
-  background-color: black;
+  background-color: #000;
   padding: 1.5rem;
   display: flex;
   width: 100%;
@@ -101,9 +105,7 @@ $hover-color: darkred;
     #gameName {
       font-size: 4em;
       font-weight: 700;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-        sans-serif;
+      font-family: system-ui, sans-serif;
       text-transform: uppercase;
     }
 
@@ -111,70 +113,10 @@ $hover-color: darkred;
       width: 100%;
 
       .gameRules {
-        font-family: monospace;
-        width: 50%;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        // border: 2px solid white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        gap: 2em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 10px;
+        visibility: visible; // turn it visible 
+        @extend .gameRules;
         border: 2px solid white;
-        // box-shadow: 0 0 100px rgba(255, 255, 255, 0.7);
-      
-        .rulesHeading {
-          font-size: 2em;
-          color: red;
-          // text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.8);
-        }
-      
-        .rules-content {
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 1.5em;
-      
-          ul {
-            list-style: none;
-            padding: 0;
-      
-            li {
-              margin-bottom: 10px;
-              font-size: 18px;
-              text-align: left;
-            }
-          }
-      
-          button {
-            padding: 10px 20px;
-            background: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-            font-size: 16px;
-      
-            &:hover {
-              background: darkred;
-            }
-            &:active {
-              scale: 0.9;
-            }
-          }
-        }
       }
-      
 
       .chooseRounds {
         border: 2px solid white;
@@ -182,15 +124,12 @@ $hover-color: darkred;
         border-radius: 10px;
         padding: 3em 1em;
         background-color: rgba(4, 49, 228, 0.71);
-
-        display: flex; // it should be done flex from JS
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 2.5em;
-
         visibility: hidden;
-
         position: absolute;
         left: 50%;
         top: 50%;
@@ -199,9 +138,7 @@ $hover-color: darkred;
         h2 {
           font-size: 2.5em;
           text-transform: uppercase;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-            sans-serif;
+          font-family: system-ui, sans-serif;
         }
 
         .roundsOptions {
@@ -216,7 +153,6 @@ $hover-color: darkred;
             font-size: 2em;
             font-weight: 800;
             border-radius: 10px;
-
             cursor: pointer;
 
             &:active {
@@ -225,11 +161,12 @@ $hover-color: darkred;
               transition: all ease 0.3s;
             }
           }
+
           .selected {
-            border: 3px solid cyan;
+            border: 3px solid $btn-bg;
             background-color: #004466;
-            box-shadow: 0 0 10px cyan;
-        }
+            box-shadow: 0 0 10px $btn-bg;
+          }
         }
 
         .startRound {
@@ -238,6 +175,8 @@ $hover-color: darkred;
           font-weight: 600;
           border-radius: 5px;
           border: none;
+          background-color: $btn-bg;
+          color: #000;
 
           &:active {
             scale: 0.9;
@@ -245,59 +184,279 @@ $hover-color: darkred;
           }
         }
       }
+
+      .playGameScreen {
+        visibility: hidden;
+        margin-top: 2em;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .currentRoundDisplay {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          h2 {
+            background-color: rgb(1, 132, 208);
+            padding: 0.5em 1.5em;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #fff;
+            border-radius: 10px;
+          }
+        }
+
+        .playGame {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          padding: 0 5em;
+
+          .computerPlay,
+          .userPlay {
+            h2 {
+              text-transform: uppercase;
+              font-size: 2.2em;
+              font-family: system-ui, sans-serif;
+              color: #fff;
+            }
+          }
+
+          .computerPlay,
+          .userPlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2em;
+
+            .optionScroll,
+            .selectMove {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 1em;
+              width: 100%;
+              height: 100%;
+
+              .computerMove,
+              .userMove {
+                cursor: pointer;
+                padding: 3em;
+                background-color: rgb(11, 17, 54);
+                border: 3px solid #fff;
+                transition: all 0.3s ease-in-out;
+
+                h3 {
+                  scale: 3.5;
+                }
+
+                &:active {
+                  scale: 0.9;
+                }
+              }
+
+              .selected,
+              .randomSelected {
+                border: 3px solid $btn-bg;
+                background-color: #004466;
+                box-shadow: 0 0 10px $btn-bg;
+              }
+            }
+          }
+
+          .timer-start {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .startGame {
+              font-size: 1.7em;
+              font-weight: 700;
+              text-transform: uppercase;
+              padding: 0.5em 1em;
+              color: #fff;
+              background-color: rgb(53, 17, 212);
+              border: none;
+              border-radius: 10px;
+              cursor: pointer;
+              transition: all 0.3s ease-in-out;
+
+              &:active {
+                scale: 0.9;
+              }
+            }
+          }
+        }
+      }
+
+      .resultPopup {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $result-bg-blur;
+        backdrop-filter: blur(6px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        transition: opacity 0.3s ease-in-out;
+
+        &.hidden {
+          display: none;
+        }
+
+        .resultContent {
+          background: $result-popup-bg;
+          border: 2px solid $result-border-color;
+          border-radius: 20px;
+          padding: 3em;
+          text-align: center;
+          color: #fff;
+          box-shadow: 0 0 20px $result-border-color;
+          width: 300px;
+          animation: popIn 0.3s ease-in-out;
+
+          h2 {
+            font-size: 1.5em;
+            margin-bottom: 1em;
+          }
+
+          h1 {
+            font-size: 3em;
+            margin: 0.2em 0;
+
+            &.winnerName {
+              font-size: 2em;
+            }
+          }
+
+          button#nextRound {
+            margin-top: 1.5em;
+            padding: 0.7em 2em;
+            font-size: 1em;
+            background-color: $btn-bg;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s ease;
+
+            &:hover {
+              background-color: $btn-hover-bg;
+            }
+          }
+        }
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.gameMenu {
+  width: 20%;
+  background-color: $result-popup-bg;
+  backdrop-filter: blur(10px);
+  border: 2px solid $result-border-color;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-family: $font;
+
+  .top-container {
+    width: 100%;
+    background-color: #000; // black background
+    border-radius: 12px;
+    padding: 1.5rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+
+    button {
+      width: 100%;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      color: $btn-bg;
+      border: 2px solid $btn-bg;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(6px);
+      font-family: $font;
+
+      &:hover {
+        background: $btn-hover-bg;
+        color: #000;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        border-color: $btn-hover-bg;
+
+        h1 {
+          color: #000;
+        }
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .dev-info h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: $btn-bg;
     }
   }
 
-  .gameMenu {
-    width: 20%;
-    background-color: rgb(218, 230, 247);
-    display: flex;
-    flex-direction: column;
-    padding: 1.1rem;
-    gap: 2em;
+  .bottom-container {
+    width: 100%;
+    background-color: $result-bg-blur;
+    border: 2px solid $result-border-color;
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
 
-    .top-container{
-      width: 100%;
-      background-color: rgb(20, 34, 228);
-      border-radius: 7px;
-      padding: 1.5em;
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2em;
-
-      .rulesBtn{
-          padding: 10px 30px;
-          background: rgb(255, 255, 255);
-          color: rgb(0, 0, 0);
-          border: none;
-          cursor: pointer;
-          border-radius: 5px;
-          transition: 0.3s;
-          font-size: 1.3em;
-          font-weight: 600;
-          text-transform: uppercase;
-    
-          &:active {
-            scale: 0.9;
-          }
-      }
+    h1 {
+      text-transform: uppercase;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      margin: 0;
+      font-family: $font;
     }
 
-    .bottom-container{
-      width: 100%;
-      height: 100%;
-      background-color: rgb(0, 47, 255);
-
-      border-radius: 7px;
-      padding: 1.3rem 1.1rem;
-
-      h1{
-        text-transform: uppercase;
-        text-align: center;
-      }
+    hr {
+      margin-top: 1rem;
+      border-color: $btn-bg;
+      opacity: 0.4;
     }
   }
 }
