@@ -96,6 +96,86 @@ body {
 .gameScreen .gameSpace .gameArea {
   width: 100%;
 }
+.gameScreen .gameSpace .gameArea .confetti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+.gameScreen .gameSpace .gameArea .resultPopup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: opacity 0.3s ease-in-out;
+}
+.gameScreen .gameSpace .gameArea .resultPopup.user-win .resultContent {
+  box-shadow: 0 0 20px cyan;
+}
+.gameScreen .gameSpace .gameArea .resultPopup.robo-win .resultContent {
+  border-color: red;
+  box-shadow: 0 0 20px red;
+}
+.gameScreen .gameSpace .gameArea .resultPopup.draw .resultContent {
+  border-color: yellow;
+  box-shadow: 0 0 20px yellow;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid cyan;
+  border-radius: 20px;
+  padding: 3em;
+  text-align: center;
+  color: #fff;
+  width: 300px;
+  animation: popIn 0.3s ease-in-out;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent h1 {
+  font-size: 3em;
+  margin: 0.2em 0;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent h1.winnerName {
+  font-size: 2em;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent .nextRound {
+  margin-top: 1.5em;
+  padding: 0.7em 2em;
+  font-size: 1em;
+  background-color: cyan;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.gameScreen .gameSpace .gameArea .resultPopup .resultContent .nextRound:hover {
+  background-color: #00ffff;
+}
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 .gameScreen .gameSpace .gameArea .gameRules {
   visibility: visible;
   border: 2px solid white;
@@ -228,7 +308,7 @@ body {
   padding: 3em;
   background-color: rgb(11, 17, 54);
   border: 3px solid #fff;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 .gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .computerMove h3,
 .gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .userMove h3,
@@ -262,6 +342,32 @@ body {
   background-color: #004466;
   box-shadow: 0 0 10px cyan;
 }
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .randomSelected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .randomSelected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .randomSelected,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .randomSelected {
+  transform: scale(1.2);
+  z-index: 2;
+  transition: transform 0.5s ease;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .flex-1,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .flex-1,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .flex-1,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .flex-1 {
+  order: 1;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .flex-2,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .flex-2,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .flex-2,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .flex-2 {
+  order: 2;
+}
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .optionScroll .flex-3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .computerPlay .selectMove .flex-3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .optionScroll .flex-3,
+.gameScreen .gameSpace .gameArea .playGameScreen .playGame .userPlay .selectMove .flex-3 {
+  order: 3;
+}
 .gameScreen .gameSpace .gameArea .playGameScreen .playGame .timer-start {
   display: flex;
   flex-direction: column;
@@ -282,70 +388,6 @@ body {
 }
 .gameScreen .gameSpace .gameArea .playGameScreen .playGame .timer-start .startGame:active {
   scale: 0.9;
-}
-.gameScreen .gameSpace .gameArea .resultPopup {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  -webkit-backdrop-filter: blur(6px);
-          backdrop-filter: blur(6px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  transition: opacity 0.3s ease-in-out;
-}
-.gameScreen .gameSpace .gameArea .resultPopup.hidden {
-  display: none;
-}
-.gameScreen .gameSpace .gameArea .resultPopup .resultContent {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid cyan;
-  border-radius: 20px;
-  padding: 3em;
-  text-align: center;
-  color: #fff;
-  box-shadow: 0 0 20px cyan;
-  width: 300px;
-  animation: popIn 0.3s ease-in-out;
-}
-.gameScreen .gameSpace .gameArea .resultPopup .resultContent h2 {
-  font-size: 1.5em;
-  margin-bottom: 1em;
-}
-.gameScreen .gameSpace .gameArea .resultPopup .resultContent h1 {
-  font-size: 3em;
-  margin: 0.2em 0;
-}
-.gameScreen .gameSpace .gameArea .resultPopup .resultContent h1.winnerName {
-  font-size: 2em;
-}
-.gameScreen .gameSpace .gameArea .resultPopup .resultContent button#nextRound {
-  margin-top: 1.5em;
-  padding: 0.7em 2em;
-  font-size: 1em;
-  background-color: cyan;
-  color: #000;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-.gameScreen .gameSpace .gameArea .resultPopup .resultContent button#nextRound:hover {
-  background-color: #00ffff;
-}
-@keyframes popIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 .gameMenu {

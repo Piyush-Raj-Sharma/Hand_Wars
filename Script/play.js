@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("selectedRounds", selectedRoundValue);
 
         // Hide the round selection screen
-        chooseRounds.style.display = "none";
+        chooseRounds.style.visibility = "hidden";
         playGameScreen.style.visibility = "visible";
       } else {
         alert("Please select the number of rounds!");
@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 1000); // Delay before showing the selection screen
 
   // ----------------------------------------------------
-  
+
   const playGameScreen = document.querySelector(".playGameScreen");
-  const currentRoundDisplay = document.querySelector('.currentRoundDisplay h2');
+  const currentRoundDisplay = document.querySelector(".currentRoundDisplay h2");
   const userPlay = document.querySelector(".userPlay");
   const playBtn = document.querySelector(".startGame");
   const userMoves = document.querySelectorAll(".userMove");
@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
   localStorage.removeItem("selectedRounds");
 
   let currentRound = 1;
+  currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
   let userMoveChoice = null;
   let userMoveId = null;
 
@@ -90,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
   userPlay.prepend(playerNameDisplay);
 
   // Handle user selecting a move
-  userMoves.forEach(move => {
+  userMoves.forEach((move) => {
     move.addEventListener("click", function () {
-      userMoves.forEach(option => option.classList.remove("selected"));
+      userMoves.forEach((option) => option.classList.remove("selected"));
       this.classList.add("selected");
       userMoveChoice = this.textContent.trim();
 
@@ -114,44 +115,209 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(`Your move is: ${userMoveChoice}, ID: ${userMoveId}`);
 
     if (currentRound <= selectedRounds) {
-        currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
-        gameLogic(userMoveId);
-        currentRound++;
+      currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
+      gameLogic(userMoveId);
+      currentRound++;
     }
   });
 
   // Core game logic function
   const gameLogic = (userMoveId) => {
-    const computerMoves = document.querySelectorAll('.computerMove');
-    const roboMove = Math.floor(Math.random() * 100 % 3)  + 1; // Random number between 1 and 3
-  
+    const computerMoves = document.querySelectorAll(".computerMove");
+    const roboMove = Math.floor((Math.random() * 100) % 3) + 1; // Random number between 1 and 3
+
     // Highlight the computer's move visually
-    computerMoves.forEach(el => el.classList.remove("randomSelected"));
+    //Brings the RoboMove in the center;
+    computerMoves.forEach((el) =>
+      el.classList.remove("randomSelected", "flex-1", "flex-2", "flex-3")
+    );
     if (computerMoves[roboMove - 1]) {
-      computerMoves[roboMove - 1].classList.add("randomSelected");
+      computerMoves[roboMove - 1].classList.add("randomSelected", "flex-2");
     }
-  
+
+    let sideOrders = ["flex-1", "flex-3"];
+    let sideIndex = 0;
+
+    computerMoves.forEach((element, index) => {
+      //logic to bring it to center
+      if (index !== roboMove - 1) {
+        //computer move is 0 based index, while roboMOve is generating 1,2,3
+        element.classList.add(sideOrders[sideIndex]);
+        sideIndex++;
+      }
+    });
+
     const moveMap = {
       1: "👊",
       2: "🤚",
-      3: "✌️"
+      3: "✌️",
     };
-  
+
     console.log(`🤖 Robo chose: ${moveMap[roboMove]}`);
     console.log(`🧑 ${userName} chose: ${moveMap[userMoveId]}`);
-  
+
     // Game result logic
     if (roboMove === userMoveId) {
+      winnerPopUp("draw");
       console.log("It's a draw! 🤝");
     } else if (
       (userMoveId === 1 && roboMove === 3) ||
       (userMoveId === 2 && roboMove === 1) ||
       (userMoveId === 3 && roboMove === 2)
     ) {
-      console.log(`${userName} wins! 🎉`);
+      winnerPopUp(userName);
+      megaConfettiInGameArea();
+      sideConfetti();
+
+      // console.log(`${userName} wins! 🎉`);
     } else {
+      winnerPopUp("Robo");
       console.log("Robo wins! 🤖");
     }
   };
+
+  const winnerPopUp = (result) => {
+    const resultPopup = document.createElement("div");
+    resultPopup.classList.add("resultPopup");
   
+    const resultContent = document.createElement("div");
+    resultContent.classList.add("resultContent");
+  
+    const h2 = document.createElement("h2");
+    const winnerEmoji = document.createElement("h1");
+    const winnerName = document.createElement("h1");
+  
+    if (result === userName) {
+      resultPopup.classList.add("user-win");
+      h2.textContent = "The Winner is :";
+      winnerEmoji.textContent = "🎉";
+      winnerName.textContent = `${userName}`;
+    } else if (result === "Robo") {
+      resultPopup.classList.add("robo-win");
+      h2.textContent = "Robo Wins!";
+      winnerEmoji.textContent = "🤖";
+      winnerName.textContent = "Robo";
+    } else {
+      resultPopup.classList.add("draw");
+      h2.textContent = "It's a Draw!";
+      winnerEmoji.textContent = "🤝";
+      winnerName.textContent = "Draw";
+    }
+  
+    const nextRoundBtn = document.createElement("button");
+    nextRoundBtn.textContent = "Next Round";
+    nextRoundBtn.classList.add("nextRound");
+  
+    // 🔥 THIS IS THE KEY PART
+    nextRoundBtn.addEventListener("click", () => {
+      // Remove the result popup
+      resultPopup.remove();
+  
+      // Reset user selection
+      userMoves.forEach((option) => option.classList.remove("selected"));
+      userMoveChoice = null;
+  
+      // Reset computer move visuals
+      document.querySelectorAll(".computerMove").forEach((el) =>
+        el.classList.remove("randomSelected", "flex-1", "flex-2", "flex-3")
+      );
+  
+      // Update round counter and display
+      if (currentRound <= selectedRounds) {
+        currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
+      } else {
+        // 🎮 Game Over
+        alert("🎮 Game Over! Thanks for playing!");
+      
+        // Hide game screen and show round selection again
+        playGameScreen.style.visibility = "hidden";
+        chooseRounds.style.visibility = "visible";
+      
+        // Optional: Reset current round and user move
+        currentRound = 1;
+        userMoveChoice = null;
+      
+        // Optional: Clear previous round selection visually
+        document.querySelectorAll(".selectedRound").forEach((option) => {
+          option.classList.remove("selected");
+        });
+      
+        // Optional: Reset current round display
+        currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
+      
+        // Optional: Show greeting again
+        greetings.textContent = `Hey, ${userName}!! Please read the instructions`;
+      }
+      
+    });
+  
+    resultContent.appendChild(h2);
+    resultContent.appendChild(winnerEmoji);
+    resultContent.appendChild(winnerName);
+    resultContent.appendChild(nextRoundBtn);
+    resultPopup.appendChild(resultContent);
+  
+    const gameArea = document.querySelector(".gameArea");
+    gameArea.appendChild(resultPopup);
+  };
+  
+  // ---------------------------CONFETTI-----------------------
+
+  function sideConfetti() {
+    confetti({
+      particleCount: 150,
+      spread: 180,
+      origin: { x: 0 }, // Left side
+      zIndex: 999,
+    });
+
+    confetti({
+      particleCount: 150,
+      spread: 180,
+      origin: { x: 1 }, // Right side
+      zIndex: 999,
+    });
+  }
+
+  const confettiCanvas = document.getElementById("confettiCanvas");
+  const myConfetti = confetti.create(confettiCanvas, {
+    resize: true,
+    useWorker: true,
+  });
+
+  function megaConfettiInGameArea() {
+    const duration = 2 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = {
+      origin: { y: 0.6 },
+      zIndex: 9999,
+      colors: ["#00ffff", "#ff00ff", "#ffff00", "#00ff00", "#ff0000"],
+      shapes: ["square", "circle"],
+    };
+
+    const interval = setInterval(function () {
+      const timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+      }
+
+      const particleCount = 100 * (timeLeft / duration);
+
+      // Left burst
+      myConfetti({
+        ...defaults,
+        particleCount,
+        spread: 60,
+        origin: { x: Math.random() * 0.2, y: Math.random() * 0.3 },
+      });
+
+      // Right burst
+      myConfetti({
+        ...defaults,
+        particleCount,
+        spread: 60,
+        origin: { x: 1 - Math.random() * 0.2, y: Math.random() * 0.3 },
+      });
+    }, 200);
+  }
 });

@@ -44,18 +44,18 @@
                         <div class="computerPlay">
                             <h2>Computer</h2>
                             <div class="optionScroll">
-                                    <div class="computerMove">
+                                    <div class="computerMove flex-1">
                                         <h3>👊</h3>
                                     </div>
-                                    <div class="computerMove">
+                                    <div class="computerMove flex-2">   
                                         <h3>🤚</h3>
                                     </div>
-                                    <div class="computerMove">
+                                    <div class="computerMove flex-3">
                                         <h3>✌️</h3>
                                     </div>
                                 </div>
                                 <!-- <div class="element">👊</div> -->
-                        </div>
+                            </div>
                         <div class="timer-start">
                             <button class="startGame">Play</button>
                         </div>
@@ -74,15 +74,15 @@
                         </div>
                     </div>
                 </section>
-                <div class="resultPopup hidden">
+                <!-- <div class="resultPopup hidden">
                     <div class="resultContent">
                       <h2>The Winner is:</h2>
                       <h1 class="winnerEmoji">🎉</h1>
                       <h1 class="winnerName">PlayerName</h1>
                       <button id="nextRound">Next Round</button>
                     </div>
-                  </div>
-                  
+                </div> -->
+                <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
             </div>
         </div>   
         <div class="gameMenu">
@@ -98,6 +98,8 @@
             </div>
           </div>          
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
     <script src="Script/play.js"></script>
 </body>
 </html>
