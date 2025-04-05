@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </section>
-                <!-- <div class="resultPopup hidden">
+                <!-- <div class="resultPopup">
                     <div class="resultContent">
                       <h2>The Winner is:</h2>
                       <h1 class="winnerEmoji">🎉</h1>
@@ -93,9 +93,23 @@
               </button>
             </div>
             <div class="bottom-container">
-              <h1>Session History</h1>
-              <hr />
-            </div>
+                <h1>Current Series</h1>
+                <hr />
+                <div class="sessionScore">
+                  <div class="scoreBox">
+                    <h2 id="userScore">You: 0</h2>
+                  </div>
+                  <div class="scoreBox">
+                    <h2 id="roboScore">Robo: 0</h2>
+                  </div>
+                </div>
+                <div class="leaderboard">
+                  <h2>Recent Game Sessions</h2>
+                  <ul id="leaderboardList">
+                    <!-- Populated dynamically -->
+                  </ul>
+                </div>
+              </div>
           </div>          
     </main>
 
