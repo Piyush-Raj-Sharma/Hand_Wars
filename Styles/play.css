@@ -597,6 +597,24 @@ button:active {
   font-size: 1.2rem;
   color: cyan;
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 .gameMenu .bottom-container {
   width: 100%;
   background-color: rgba(0, 255, 255, 0.05);

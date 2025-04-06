@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Reset rulesSeen flag so rules will be shown on next screen
         localStorage.removeItem("rulesSeen");
 
-        alert(`Welcome, ${userName}! Let's start the game.`);
-
         // Redirect to game screen and show rules
         window.location.href = "play.html?showRules=true";
     });

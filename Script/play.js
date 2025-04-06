@@ -274,15 +274,25 @@ const myConfettii = confetti.create(document.body, {
       const animationEnd = Date.now() + duration;
       const defaults = {
         origin: { y: 0.6 },
-        zIndex: 99999,
+        zIndex: 9999999,
         colors: ["#00ffff", "#ff00ff", "#ffff00", "#00ff00", "#ff0000"],
         shapes: ["square", "circle"],
       };
-
+  
+      // ⬇ Manually set z-index and pointer-events for the canvas
+      const canvas = document.querySelector("canvas.confetti-canvas");
+      if (canvas) {
+        canvas.style.zIndex = "9999999";
+        canvas.style.position = "fixed";
+        canvas.style.pointerEvents = "none";
+        canvas.style.top = "0";
+        canvas.style.left = "0";
+      }
+  
       const interval = setInterval(() => {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) clearInterval(interval);
-
+  
         const particleCount = 100 * (timeLeft / duration);
         myConfetti({
           ...defaults,
@@ -299,7 +309,7 @@ const myConfettii = confetti.create(document.body, {
       }, 200);
     }, 1000);
   }
-
+  
   function emojiConfetti() {
     const interval = setInterval(function () {
       const emoji = document.createElement('div');
@@ -412,6 +422,73 @@ const myConfettii = confetti.create(document.body, {
 
     isRulesVisible = false;
   });
+
+  document.querySelector(".dev-info").addEventListener("click", () => {
+    // Remove existing if already present
+    const existing = document.querySelector(".dev-info-overlay");
+    if (existing) existing.remove();
+  
+    // Create overlay
+    const overlay = document.createElement("div");
+    overlay.classList.add("dev-info-overlay");
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      backdrop-filter: blur(8px);
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+    `;
+  
+    // Create popup
+    const popup = document.createElement("div");
+    popup.classList.add("dev-info-popup");
+    popup.style.cssText = `
+      background: rgba(1, 44, 44, 0.47);
+      border: 2px solid #00ffff;
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #00ffff;
+      text-align: center;
+      color: #fff;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      font-family: 'Orbitron', sans-serif;
+    `;
+  
+    popup.innerHTML = `
+      <img src="Assets/piyush-ghibli.png" alt="Piyush Raj" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; box-shadow: 0 0 15px #00ffff; margin-bottom: 20px;" />
+      <h2 style="font-size: 28px; margin: 10px 0;">Piyush Raj</h2>
+      <p style="font-size: 16px; margin-bottom: 20px;">Web Developer | JavaScript & MERN Enthusiast</p>
+      <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
+        <a href="https://github.com/Piyush-Raj-Sharma" target="_blank">
+          <img src="Assets/github.png" alt="LinkedIn" style="width: 35px; filter: drop-shadow(0 0 1px #00ffff);" />
+        </a>
+        <a href="https://github.com/Piyush-Raj-Sharma" target="_blank">
+          <img src="Assets/instagram.png" alt="GitHub" style="width: 35px; filter: drop-shadow(0 0 1px #00ffff);" />
+        </a>
+        <a href="https://linkedin.com/in/piyush-raj-sharma" target="_blank">
+          <img src="Assets/linkedin.png" alt="Instagram" style="width: 35px; filter: drop-shadow(0 0 1px #00ffff);" />
+        </a>
+      </div>
+      <button class="close-dev-info" style="padding: 8px 20px; font-size: 14px; background: #00ffff; border: none; border-radius: 10px; color: #000; cursor: pointer; box-shadow: 0 0 10px #00ffff;">Close</button>
+    `;
+  
+    // Append to overlay
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+  
+    // Close button
+    popup.querySelector(".close-dev-info").addEventListener("click", () => {
+      overlay.remove();
+    });
+  });
+  
+  
 
   function getRecentGames() {
     return JSON.parse(localStorage.getItem("recentGames")) || [];
