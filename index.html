@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Styles/style.css">
-    <title>Hand Wars</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hand Wars</title>
+  <link rel="stylesheet" href="Styles/style.css" />
 </head>
-<body style="display: flex; justify-content: center; align-items: center; background: black;">
+<body>
+  <div class="container">
+    <h1>🖐 Hand Wars 🤖</h1>
     <a href="game.html">
-        <button style="padding: 2em; font-size: 2em;">Click to trigger</button>
+      <button class="play-btn">Start the Battle!</button>
     </a>
-    </body>
+  </div>
+
+  <!-- Falling emoji confetti -->
+  <script>
+    setInterval(() => {
+      const emoji = document.createElement('div');
+      emoji.textContent = ['🖐', '✊', '✌️'][Math.floor(Math.random() * 3)];
+      emoji.classList.add('emoji');
+  
+      // Random position, size, and animation speed
+      const left = Math.random() * 100;
+      const size = 2 + Math.random() * 2;
+      const duration = 3 + Math.random() * 2;
+      const rotation = Math.random() * 360;
+  
+      emoji.style.left = `${left}vw`;
+      emoji.style.fontSize = `${size}rem`;
+      emoji.style.animationDuration = `${duration}s`;
+      emoji.style.transform = `rotate(${rotation}deg)`;
+  
+      document.body.appendChild(emoji);
+  
+      // Clean up to prevent memory leak
+      setTimeout(() => emoji.remove(), duration * 1000);
+    }, 200);
+  </script>
+  );
+  </script>
+</body>
 </html>

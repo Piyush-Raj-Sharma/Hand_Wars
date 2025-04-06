@@ -154,10 +154,11 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       userScore++;
       winnerPopUp(userName);
-      megaConfettiInGameArea();
+      // megaConfettiInGameArea();
       sideConfetti();
     } else {
       roboScore++;
+      emojiConfetti();
       winnerPopUp("Robo");
     }
 
@@ -299,6 +300,37 @@ const myConfettii = confetti.create(document.body, {
     }, 1000);
   }
 
+  function emojiConfetti() {
+    const interval = setInterval(function () {
+      const emoji = document.createElement('div');
+      const X = Math.random() * 100; // Horizontal position (vw)
+      const Y = Math.random() * 100; // Horizontal position (vw)
+      const rotate = Math.random() * 360;
+      let emojiIndex = Math.trunc(Math.random()* 3);
+  
+      const emojiList = ['😂', '😝', '😜'];
+      console.log(emojiIndex);
+      
+      emoji.textContent =` ${emojiList[emojiIndex]}`;
+      // console.log(` ${emojiList[emojiIndex]}`);
+      
+      emoji.classList.add('emoji');
+      emoji.style.left = `${X}vw`;
+      emoji.style.transform = `rotate(${rotate}deg)`;
+  
+      document.querySelector('.gameArea').appendChild(emoji);
+  
+      // Remove emoji after animation ends (5s)
+      setTimeout(() => {
+        emoji.remove();
+      }, 3000);
+    }, 70); // Every 100ms
+  
+    // Optional: Stop confetti after 5 seconds
+    setTimeout(() => clearInterval(interval), 3000);
+  }
+  
+
   function showGameOverPopup() {
     const overlay = $$$("div");
     overlay.classList.add("gameOverOverlay");
@@ -321,6 +353,7 @@ const myConfettii = confetti.create(document.body, {
       winnerName.textContent = `${userName} Wins the Series!`;
       megaConfettiInGameArea();
     } else if (roboScore > userScore) {
+      emojiConfetti();
       winnerEmoji.textContent = "🤖";
       winnerName.textContent = "Robo Wins the Series!";
     } else {

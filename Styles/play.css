@@ -15,6 +15,24 @@ body {
   background-color: #000;
   color: #fff;
   font-family: "Orbitron", sans-serif;
+  overflow: hidden;
+  height: 100vh;
+}
+
+button {
+  background-color: rgb(7, 131, 233);
+  font-size: 1.5em;
+  font-weight: 700;
+  padding: 20px 30px;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  letter-spacing: 2px;
+  z-index: 99;
+}
+button:active {
+  scale: 0.9;
+  opacity: 0.8;
 }
 
 .rulesOverlay {
@@ -116,9 +134,26 @@ body {
   font-weight: 700;
   font-family: system-ui, sans-serif;
   text-transform: uppercase;
+  z-index: 999999;
 }
 .gameScreen .gameSpace .gameArea {
   width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.gameScreen .gameSpace .gameArea .emoji {
+  position: absolute;
+  top: -5vh;
+  font-size: 2.5rem;
+  animation: fall 5s linear forwards;
+  pointer-events: none;
+  z-index: 10000;
+}
+@keyframes fall {
+  to {
+    top: 110vh;
+    opacity: 0;
+  }
 }
 @keyframes popIn {
   0% {

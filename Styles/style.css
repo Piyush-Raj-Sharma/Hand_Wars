@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at center, #1e1e1e, #000);
+  color: white;
+  font-family: "Press Start 2P", cursive;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  animation: fadeIn 2s ease;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #ff0;
+  text-shadow: 0 0 15px #f0f, 0 0 25px #0ff;
+  margin-bottom: 1em;
+}
+
+.play-btn {
+  padding: 1.2em 2em;
+  font-size: 1.2em;
+  color: #fff;
+  background: linear-gradient(45deg, #ff0066, #ffcc00);
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #ff0066;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #ffcc00;
+}
+
+.emoji {
+  font-size: 2.5rem;
+  position: absolute;
+  top: -5vh;
+  animation: fall 4s ease-in forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
