@@ -1,24 +1,26 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let userCard = document.querySelector('.enterName');
-    let userNameBtn = document.querySelector('#nextButton');
+    const userCard = document.querySelector('.enterName');
+    const userNameBtn = document.querySelector('#nextButton');
 
     userCard.style.display = 'block';
 
     userNameBtn.addEventListener('click', function () {
-        let userName = document.querySelector('#userName').value.trim();
+        const userName = document.querySelector('#userName').value.trim();
 
         if (userName === "") {
             alert("Please enter your name!");
             return;
         }
-        // console.log(userName);
 
-        // Save name for future use
-        localStorage.setItem("playerName", userName); // playerName (will be used to access later) is the variable name for the 'userName' in the Local Storage
+        // Save name to localStorage
+        localStorage.setItem("playerName", userName);
+
+        // Reset rulesSeen flag so rules will be shown on next screen
+        localStorage.removeItem("rulesSeen");
 
         alert(`Welcome, ${userName}! Let's start the game.`);
 
-        // Redirect to the next game screen or enable the game
-        window.location.href = "play.html"; 
+        // Redirect to game screen and show rules
+        window.location.href = "play.html?showRules=true";
     });
 });

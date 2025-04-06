@@ -16,20 +16,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const computerMoves = $$(".computerMove");
   const rulesBtn = $(".rulesBtn");
   const leaderBoard = $(".bottom-container");
-  const leaderboardList = $("#leaderboardList"); // FIXED selector (was wrong before)
+  const leaderboardList = $("#leaderboardList");
+  const rulesOverlay = $("#rulesOverlay");
 
-  // Session Scores Display
   const userScoreDisplay = $("#userScore");
   const roboScoreDisplay = $("#roboScore");
 
-  // Player info
   const userName = localStorage.getItem("playerName") || "Player";
   greetings.textContent = `Hey, ${userName}!! Please read the instructions`;
   greetings.style.fontWeight = "700";
   greetings.style.fontSize = "2em";
   greetings.style.color = "#00FFFF";
 
-  // Game Variables
   let selectedRoundValue = null;
   let selectedRounds = localStorage.getItem("selectedRounds");
   let currentRound = 1;
@@ -37,18 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
   let userScore = 0;
   let roboScore = 0;
 
-  // ✅ Initial Load: Render Leaderboard
   renderRecentGames();
 
-  // Confetti setup
   const confettiCanvas = document.getElementById("confettiCanvas");
   const myConfetti = confetti.create(confettiCanvas, {
     resize: true,
     useWorker: true,
   });
 
-  // EVENT: Close Rules (Got It button)
-  closeRulesBtn.addEventListener("click", () => {
+  function hideRules() {
     gameRules.style.visibility = "hidden";
     chooseRounds.style.visibility = "visible";
     chooseRounds.style.opacity = "0";
@@ -57,9 +52,22 @@ document.addEventListener("DOMContentLoaded", function () {
       chooseRounds.style.opacity = "1";
       chooseRounds.style.transition = "opacity 1s ease";
     }, 100);
+  }
+
+  closeRulesBtn.addEventListener("click", () => {
+    localStorage.setItem("rulesSeen", "true");
+    hideRules();
   });
 
-  // EVENT: Round Selection
+  const rulesSeen = localStorage.getItem("rulesSeen");
+
+  if (rulesSeen === "true") {
+    hideRules();
+  } else {
+    gameRules.style.visibility = "visible";
+    chooseRounds.style.visibility = "hidden";
+  }
+
   $$(".selectedRound").forEach((btn) => {
     btn.addEventListener("click", function () {
       $$(".selectedRound").forEach((b) => b.classList.remove("selected"));
@@ -68,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // EVENT: Start Game Button (after round selected)
   $(".startRound").addEventListener("click", () => {
     if (selectedRoundValue) {
       localStorage.setItem("selectedRounds", selectedRoundValue);
@@ -88,12 +95,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Display Player Name
   const playerNameDisplay = $$$("h2");
   playerNameDisplay.textContent = `${userName}`;
   userPlay.prepend(playerNameDisplay);
 
-  // Handle user move selection
   userMoves.forEach((move) => {
     move.addEventListener("click", function () {
       userMoves.forEach((m) => m.classList.remove("selected"));
@@ -102,34 +107,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // EVENT: Play Game
   playBtn.addEventListener("click", () => {
     if (!userMoveChoice) {
       alert("Please select a move first!");
       return;
     }
 
+    if (currentRound > selectedRounds) {
+      alert("All rounds are completed!");
+      return;
+    }
+
     const emojiToId = { "👊": 1, "🤚": 2, "✌️": 3 };
     const userMoveId = emojiToId[userMoveChoice];
 
-    if (currentRound <= selectedRounds) {
-      currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
-      gameLogic(userMoveId);
-      currentRound++;
-    }
+    currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
+    gameLogic(userMoveId);
   });
 
-  // GAME LOGIC
   function gameLogic(userMoveId) {
     const roboMove = Math.floor(Math.random() * 3) + 1;
 
-    computerMoves.forEach((el) => el.classList.remove("randomSelected", "flex-1", "flex-2", "flex-3"));
+    computerMoves.forEach((el) =>
+      el.classList.remove("randomSelected", "flex-1", "flex-2", "flex-3")
+    );
 
     if (computerMoves[roboMove - 1]) {
       computerMoves[roboMove - 1].classList.add("randomSelected", "flex-2");
     }
 
-    let sideOrders = ["flex-1", "flex-3"];
+    const sideOrders = ["flex-1", "flex-3"];
     let sideIndex = 0;
     computerMoves.forEach((el, index) => {
       if (index !== roboMove - 1) {
@@ -203,12 +210,12 @@ document.addEventListener("DOMContentLoaded", function () {
           el.classList.remove("randomSelected", "flex-1", "flex-2", "flex-3")
         );
 
+        currentRound++;
         if (currentRound <= selectedRounds) {
           currentRoundDisplay.textContent = `Round ${currentRound} of ${selectedRounds}`;
         } else {
-          alert("🎮 Game Over! Thanks for playing!");
           onSeriesComplete();
-          resetGame();
+          showGameOverPopup();
         }
       });
 
@@ -235,11 +242,28 @@ document.addEventListener("DOMContentLoaded", function () {
     updateScoreBoard();
   }
 
-  // Confetti Effects
+  // Create the confetti instance on the <body> with a high zIndex
+const myConfettii = confetti.create(document.body, {
+  resize: true,
+  useWorker: true,
+  zIndex: 10001, // Must be higher than .rulesOverlay z-index (1000)
+});
+
+
   function sideConfetti() {
     setTimeout(() => {
-      confetti({ particleCount: 150, spread: 180, origin: { x: 0 }, zIndex: 999 });
-      confetti({ particleCount: 150, spread: 180, origin: { x: 1 }, zIndex: 999 });
+      confetti({
+        particleCount: 150,
+        spread: 180,
+        origin: { x: 0 },
+        zIndex: 99999,
+      });
+      confetti({
+        particleCount: 150, 
+        spread: 180,
+        origin: { x: 1 },
+        zIndex: 99999,
+      });
     }, 500);
   }
 
@@ -249,7 +273,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const animationEnd = Date.now() + duration;
       const defaults = {
         origin: { y: 0.6 },
-        zIndex: 9999,
+        zIndex: 99999,
         colors: ["#00ffff", "#ff00ff", "#ffff00", "#00ff00", "#ff0000"],
         shapes: ["square", "circle"],
       };
@@ -259,25 +283,114 @@ document.addEventListener("DOMContentLoaded", function () {
         if (timeLeft <= 0) clearInterval(interval);
 
         const particleCount = 100 * (timeLeft / duration);
-        myConfetti({ ...defaults, particleCount, spread: 60, origin: { x: Math.random() * 0.2, y: Math.random() * 0.3 } });
-        myConfetti({ ...defaults, particleCount, spread: 60, origin: { x: 1 - Math.random() * 0.2, y: Math.random() * 0.3 } });
+        myConfetti({
+          ...defaults,
+          particleCount,
+          spread: 60,
+          origin: { x: Math.random() * 0.2, y: Math.random() * 0.3 },
+        });
+        myConfetti({
+          ...defaults,
+          particleCount,
+          spread: 60,
+          origin: { x: 1 - Math.random() * 0.2, y: Math.random() * 0.3 },
+        });
       }, 200);
     }, 1000);
   }
 
-  // Show Rules Button
+  function showGameOverPopup() {
+    const overlay = $$$("div");
+    overlay.classList.add("gameOverOverlay");
+
+    const resultPopup = $$$("div");
+    resultPopup.classList.add("gameOverPopup");
+
+    const resultContent = $$$("div");
+    resultContent.classList.add("gameOverContent");
+
+    const h2 = $$$("h2");
+    h2.textContent = "🎮 Game Over!";
+    h2.style.color = "#fff";
+
+    const winnerEmoji = $$$("h1");
+    const winnerName = $$$("h1");
+
+    if (userScore > roboScore) {
+      winnerEmoji.textContent = "🏆";
+      winnerName.textContent = `${userName} Wins the Series!`;
+      megaConfettiInGameArea();
+    } else if (roboScore > userScore) {
+      winnerEmoji.textContent = "🤖";
+      winnerName.textContent = "Robo Wins the Series!";
+    } else {
+      winnerEmoji.textContent = "🤝";
+      winnerName.textContent = "It's a Draw!";
+    }
+
+    winnerName.style.marginBottom = "1rem";
+
+    const playAgainBtn = $$$("button");
+    playAgainBtn.classList.add("gameOverBtn");
+    playAgainBtn.textContent = "Play Again";
+    playAgainBtn.addEventListener("click", () => {
+      overlay.remove();
+      resultPopup.remove();
+      resetGame();
+    });
+
+    const exitBtn = $$$("button");
+    exitBtn.classList.add("gameOverBtn", "exitBtn");
+    exitBtn.textContent = "Exit";
+    exitBtn.addEventListener("click", () => {
+      localStorage.removeItem("rulesSeen");
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 100);
+    });
+
+    resultContent.append(h2, winnerEmoji, winnerName, playAgainBtn, exitBtn);
+    resultPopup.appendChild(resultContent);
+
+    overlay.appendChild(resultPopup);
+    $(".gameArea").appendChild(overlay);
+  }
+
+  let isRulesVisible = false;
+
   rulesBtn.addEventListener("click", () => {
-    gameRules.classList.add("blur-filter");
-    gameRules.style.visibility = "visible";
+    isRulesVisible = !isRulesVisible;
+
+    rulesOverlay.classList.toggle("show", isRulesVisible);
+    closeRulesBtn.style.visibility = "hidden";
+    // Toggle visibility of close button and game rules
+    rulesBtn.textContent = isRulesVisible ? "Close Rules" : "Rules";
+    gameRules.style.visibility = isRulesVisible ? "visible" : "hidden";
   });
 
-  // ✅ LocalStorage: Game Session Logic
+  closeRulesBtn.addEventListener("click", () => {
+    localStorage.setItem("rulesSeen", "true");
+
+    rulesOverlay.classList.remove("show");
+    rulesBtn.textContent = "Rules";
+
+    closeRulesBtn.style.visibility = "hidden";
+    gameRules.style.visibility = "hidden";
+
+    isRulesVisible = false;
+  });
+
   function getRecentGames() {
     return JSON.parse(localStorage.getItem("recentGames")) || [];
   }
 
   function saveGameSession(userScore, roboScore) {
-    const winner = userScore > roboScore ? `${userName}` : userScore < roboScore ? "Robo" : "Draw";
+    const winner =
+      userScore > roboScore
+        ? `${userName}`
+        : userScore < roboScore
+        ? "Robo"
+        : "Draw";
     const timeStamp = new Date().toLocaleDateString();
 
     const newSession = { userScore, roboScore, winner, timeStamp };
@@ -313,8 +426,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function onSeriesComplete() {
-    const userScore = parseInt($("#userScore").textContent.split(":")[1].trim());
-    const roboScore = parseInt($("#roboScore").textContent.split(":")[1].trim());
+    const userScore = parseInt(
+      $("#userScore").textContent.split(":")[1].trim()
+    );
+    const roboScore = parseInt(
+      $("#roboScore").textContent.split(":")[1].trim()
+    );
     saveGameSession(userScore, roboScore);
   }
 });
